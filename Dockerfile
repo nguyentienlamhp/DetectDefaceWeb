@@ -11,6 +11,8 @@ RUN apt install -y \
     python3-requests \
     python3-flask \
     firefox \
+&& pip install markupsafe==2.0.1 \
+&& pip install werkzeug==2.0.3 \
 && pip install selenium \
 && pip install webdriver-manager \
 && pip install Pillow \

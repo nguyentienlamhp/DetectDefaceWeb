@@ -1,3 +1,4 @@
+import FlaskApp.database as database
 import imghdr
 import os
 import smtplib
@@ -8,29 +9,38 @@ import requests
 from telegram import Bot
 import base64
 
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-import FlaskApp.database as database
 
 db = database.Database("setting")
+
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8')
 
 
 class Alert:
     def sendMessageToEndpoint(self, receiver, subject, message, imagePath=None):
-        endpoint=os.environ["API_URL"]
+        endpoint = os.environ["API_URL"]
+        print("endpoint: " + endpoint)
         base64String = ""
-       
+
         if(imagePath is not None):
             with open(imagePath, "rb") as f:
                 file_data = f.read()
                 base64String = base64.b64encode(file_data)
-                
-        r = requests.post(endpoint, data={'receiver': receiver, 'subject': subject, 'message': message,"base64String":base64String})
+
+        r = requests.post(endpoint, data={
+                          'receiver': receiver, 'subject': subject, 'message': message, "base64String": base64String})
         print(r.status_code)
         print(r.reason)
-        
+
     def sendMessage(self, receiver, subject, message, imagePath=None):
         for data in db.get_multiple_data():
             if "smtp" not in data:
@@ -44,27 +54,36 @@ class Alert:
             EMAIL_ADDRESS = smtp["smtp_address"]
             EMAIL_PASSWORD = smtp["smtp_password"]
 
-        msg = EmailMessage()
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_ADDRESS
-        msg["To"] = receiver
-        msg.set_content(message)
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_ADDRESS
+        msg['To'] = COMMASPACE.join(receiver)
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = subject
 
-        try: 
+        msg.attach(MIMEText(message))
+
+        try:
             if imagePath is not None:
                 with open(imagePath, "rb") as f:
                     file_data = f.read()
                     file_type = imghdr.what(f.name)
-                msg.add_attachment(
-                    file_data, maintype="image", subtype=file_type, filename="Website image"
-                )
-            #with smtplib.SMTP_SSL(EMAIL_SERVER, 465) as smtp:
+                    part = MIMEApplication(
+                        f.read(),
+                        Name=f.name
+                    )
+                    part['Content-Disposition'] = 'attachment; filename="%s"' % f.name
+                    msg.attach(part)
+                    # msg.add_attachment(
+                    #     file_data, maintype="image", subtype=file_type, filename="Website image"
+                    # )
+            # with smtplib.SMTP_SSL(EMAIL_SERVER, 465) as smtp:
             with smtplib.SMTP(EMAIL_SERVER, 587) as smtp:
                 smtp.ehlo()
                 smtp.starttls()
                 smtp.ehlo()
                 smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                smtp.send_message(msg)
+                # smtp.send_message(msg)
+                smtp.sendmail(EMAIL_ADDRESS, receiver, msg.as_string())
                 smtp.close()
         except smtplib.SMTPException as e:
             print(e)

@@ -51,6 +51,10 @@ def checkdomain():
         res = {"code":500,"status": "URL Invalid! " + url}
     else:
         img_path = screenshot(url)
+        #test
+        #al.sendMessageToEndpoint("receiver", "subject", "message", img_path)
+        #al.sendMessage("receiver", "subject", "message", img_path)
+        #end test
         defaced = check(img_path)
         if defaced:
             al.sendBot(url, img_path)
@@ -59,7 +63,7 @@ def checkdomain():
                 f"You website was defaced!\nURL: {url}"
             )
             al.sendMessageToEndpoint(receiver, subject, message, img_path)
-            al.sendMessage(receiver, subject, message, img_path)
+            #al.sendMessage(receiver, subject, message, img_path)
             res = {"code":200,"status": "Website was defaced!"}
             print("Website was defaced!")
         else:
