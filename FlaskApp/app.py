@@ -1,7 +1,7 @@
 import schedule as sch
 import database
 import createLicense as license
-import alert
+from ... import alert
 import re
 import hashlib
 import os
