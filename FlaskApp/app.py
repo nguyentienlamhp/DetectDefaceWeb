@@ -1,9 +1,3 @@
-import schedule as sch
-import database
-import createLicense as license
-import alert
-import re
-import hashlib
 import os
 import sys
 
@@ -13,6 +7,13 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
+import hashlib
+import re
+
+import alert
+import createLicense as license
+import database
+import schedule as sch
 
 def slug(string):
     pattern = "|%[0-9]{1,}|%|--|#|;|/\*|'|\"|\\\*|\[|\]|\<|\>|xp_|\$gt|\$ne|\$lt|$"

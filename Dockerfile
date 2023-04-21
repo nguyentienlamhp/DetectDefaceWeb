@@ -5,7 +5,7 @@ LABEL maintainer="Nguyen Tien Lam <nguyentienlam@mitc.vn>"
 ENV GECKODRIVER_VER v0.29.0
 
 RUN apt-get update
-RUN api install nano
+RUN apt install nano
 RUN python3 -m pip install --upgrade pip
 RUN apt install -y \
     cron \

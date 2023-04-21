@@ -1,23 +1,18 @@
-import FlaskApp.database as database
 import imghdr
 import os
 import smtplib
 import sys
 from datetime import datetime
 from email.message import EmailMessage
-import requests
-from telegram import Bot
-import base64
 
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
+
+from telegram import Bot
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
+import FlaskApp.database as database
 
 db = database.Database("setting")
 
