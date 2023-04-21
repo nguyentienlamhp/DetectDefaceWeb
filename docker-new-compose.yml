@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  flask:
+    #change to mongo dung chung
+    image: mrlam2605/detect-deface-web
+    user: root
+    container_name: flask_app_detect_deface_web
+    restart: unless-stopped
+    environment:
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: abc123-
+      MONGODB_HOSTNAME: 192.168.10.50
+      API_URL: http://httpbin.org/post
+    ports:
+      - "9080:8080"
+      - "9088:8088"
+    #depends_on:
+    #  - mongodb
+    networks:
+      - app-network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      #- ./Alert:/opt/In0ri/Alert
+
+networks:
+  app-network:
+    driver: bridge
