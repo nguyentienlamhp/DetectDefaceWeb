@@ -6,6 +6,10 @@ from datetime import datetime
 from email.message import EmailMessage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from email.utils import formataddr
+from email.utils import make_msgid
+from email.utils import formatdate
 
 from telegram import Bot
 
@@ -52,8 +56,9 @@ class Alert:
 
         msg = MIMEMultipart()
         msg['From'] = EMAIL_ADDRESS
-        msg['To'] = COMMASPACE.join(receiver)
+        #msg['To'] = COMMASPACE.join(receiver)
         msg['Date'] = formatdate(localtime=True)
+        msg['To'] = receiver
         msg['Subject'] = subject
 
         msg.attach(MIMEText(message))
@@ -79,6 +84,7 @@ class Alert:
                 smtp.ehlo()
                 smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
                 # smtp.send_message(msg)
+                smtp.encode()
                 smtp.sendmail(EMAIL_ADDRESS, receiver, msg.as_string())
                 smtp.close()
         except smtplib.SMTPException as e:
