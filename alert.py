@@ -122,10 +122,11 @@ class Alert:
 
     def getBotInfo(self, CHAT_ID, TOKEN):
         try:
-            bot1 = Bot(TOKEN)
-            first_name = bot1.getMe().first_name
-            title = bot1.getChat(CHAT_ID).title
-            return first_name, title
+            #bot1 = Bot(TOKEN)
+            #first_name = bot1.getMe().first_name
+            #title = bot1.getChat(CHAT_ID).title
+            #return first_name, title
+            return TOKEN, CHAT_ID
         except:
             return "ERROR"
 
