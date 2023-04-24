@@ -10,7 +10,7 @@ services:
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: abc123-
       MONGODB_HOSTNAME: 192.168.10.50
-      API_URL: http://httpbin.org/post
+      API_URL: https://svc.mitc.vn/notification/add
     ports:
       - "9080:8080"
       - "9088:8088"

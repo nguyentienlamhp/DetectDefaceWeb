@@ -32,7 +32,7 @@ class Alert:
                 base64String = base64.b64encode(file_data)
 
         r = requests.post(endpoint, data={
-                          'receiver': receiver, 'subject': subject, 'message': message, "base64String": base64String})
+                          'type': 4, 'metadata': {"receiver":receiver,"base64String": base64String,"subject":subject}, 'message': message})
         print(r.status_code)
         print(r.reason)
 
