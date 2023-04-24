@@ -11,6 +11,9 @@ from email.utils import formataddr
 from email.utils import make_msgid
 from email.utils import formatdate
 
+import base64
+import requests
+
 from telegram import Bot
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
