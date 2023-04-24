@@ -45,7 +45,7 @@ def checkdomain():
     try:
         response = requests.get(url)
     except requests.ConnectionError:
-        res = {"code":200, "status": "500 Internal Server Error!"}
+        res = {"code":500, "status": "500 Internal Server Error!"}
         return res
     if (response.status_code != 200) and (response.status_code != 302):
         res = {"code":500,"status": "URL Invalid! " + url}
@@ -62,7 +62,7 @@ def checkdomain():
             message = (
                 f"You website was defaced!\nURL: {url}"
             )
-            al.sendMessageToEndpoint(receiver, subject, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
             res = {"code":200,"status": "Website was defaced!"}
             print("Website was defaced!")
@@ -108,7 +108,7 @@ def checkdeface():
             message = (
                 f"You website was defaced!\nURL: {url} \nPath infected: {body['path']}"
             )
-            al.sendMessageToEndpoint(receiver, subject, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
             al.sendMessage(receiver, subject, message, img_path)
             res = {"status": "Website was defaced!"}
             print("Website was defaced!")
