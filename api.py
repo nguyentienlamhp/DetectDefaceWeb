@@ -57,12 +57,12 @@ def checkdomain():
         #end test
         defaced = check(img_path)
         if defaced:
-            al.sendBot(url, img_path)
             subject = "Website Defacement"
             message = (
                 f"You website was defaced!\nURL: {url}"
             )
             al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
+            al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
             res = {"code":200,"status": "Website was defaced!"}
             print("Website was defaced!")
@@ -103,12 +103,13 @@ def checkdeface():
         img_path = screenshot(url)
         defaced = check(img_path)
         if defaced:
-            al.sendBot(url, img_path)
+            
             subject = "Website Defacement"
             message = (
                 f"You website was defaced!\nURL: {url} \nPath infected: {body['path']}"
             )
             al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
+            al.sendBot(url, img_path)
             al.sendMessage(receiver, subject, message, img_path)
             res = {"status": "Website was defaced!"}
             print("Website was defaced!")

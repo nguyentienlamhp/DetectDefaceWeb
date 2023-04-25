@@ -13,6 +13,7 @@ from email.utils import formatdate
 
 import base64
 import requests
+import json
 
 from telegram import Bot
 
@@ -37,10 +38,11 @@ class Alert:
         if(imagePath is not None):
             with open(imagePath, "rb") as f:
                 file_data = f.read()
-                base64String = base64.b64encode(file_data)
-
-        r = requests.post(endpoint, data={
-                          'domain':url,'type': 4, 'metadata': {"receiver":receiver,"base64String": base64String,"subject":subject}, 'message': message})
+                base64_bytes = base64.b64encode(file_data)
+                base64String = base64_bytes.decode('ascii')
+        headers = {'content-type': 'application/json'}
+        payload = {'domain':url,'type': 4, 'metadata': {'receiver':receiver,'base64String': base64String,'subject':subject}, 'message': message}
+        r = requests.post(endpoint, data=json.dumps(payload), headers=headers)
         print(r.status_code)
         print(r.reason)
 
