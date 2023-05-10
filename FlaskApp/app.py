@@ -78,13 +78,14 @@ def register():
     if check == 1:
         response = "EXIST"
     else:
-        db.insert_data(data)
+        result = db.insert_data(data)
+        _id = result.inserted_id
         if int(hours) == 0:
             sch.create(url, email, None, minutes)
         if int(minutes) == 0:
             sch.create(url, email, hours, None)
         response = "OKE"
-    return response
+    return response , 200, {"_id": _id}
 
 
 @app.route("/createAgent", methods=["POST"])
