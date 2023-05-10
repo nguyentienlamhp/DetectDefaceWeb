@@ -78,8 +78,7 @@ def register():
     if check == 1:
         response = "EXIST"
     else:
-        result = db.insert_data(data)
-        _id = result.inserted_id
+        _id = db.insert_data(data)
         if int(hours) == 0:
             sch.create(url, email, None, minutes)
         if int(minutes) == 0:
