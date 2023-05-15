@@ -110,9 +110,7 @@ def checkdeface():
             
             subject = "Website Defacement"
             defaced_result = "true"
-            message = (
-                f"You website was defaced!\nURL: {url} \nPath infected: {body['path']}"
-            )
+            message ="You website was defaced!"
             al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
             #al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
