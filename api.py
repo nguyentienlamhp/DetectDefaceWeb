@@ -58,15 +58,19 @@ def checkdomain():
         defaced = check(img_path)
         if defaced:
             subject = "Website Defacement"
+            defaced_result = "true"
             message = (
                 f"You website was defaced!\nURL: {url}"
             )
-            al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
             al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
-            res = {"code":200,"status": "Website was defaced!"}
+            res = {"code":200,"status": "Website was defaced!", "defaced": "true"}
             print("Website was defaced!")
         else:
+            defaced_result = "false"
+            message = "Everything oke!"
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
             res = {"code":200,"status": "Everything oke!"}
             print("Everything oke!")
     return res
@@ -105,15 +109,19 @@ def checkdeface():
         if defaced:
             
             subject = "Website Defacement"
+            defaced_result = "true"
             message = (
                 f"You website was defaced!\nURL: {url} \nPath infected: {body['path']}"
             )
-            al.sendMessageToEndpoint(url,receiver, subject, message, img_path)
-            al.sendBot(url, img_path)
-            al.sendMessage(receiver, subject, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
+            #al.sendBot(url, img_path)
+            #al.sendMessage(receiver, subject, message, img_path)
             res = {"status": "Website was defaced!"}
             print("Website was defaced!")
         else:
+            defaced_result = "false"
+            message = "Everything oke!"
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
             res = {"status": "Everything oke!"}
             print("Everything oke!")
     return res
