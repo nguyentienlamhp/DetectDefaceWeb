@@ -39,7 +39,10 @@ class Alert:
             with open(imagePath, "rb") as f:
                 file_data = f.read()
                 base64_bytes = base64.b64encode(file_data)
-                base64String = base64_bytes.decode('ascii')
+                #base64String = base64_bytes.decode('ascii')
+                base64String = base64_bytes.decode('utf-8')
+                #base64String = base64.b64encode(file_data).decode('utf-8')
+                
         headers = {'content-type': 'application/json'}
         #payload = {'domain':url,'type': 4, 'metadata': {'receiver':receiver,'base64String': base64String,'deface': deface}, 'message': message}
         payload = {'domain':url,'type': 4,'base64String': base64String,'deface': deface,'message': message}
