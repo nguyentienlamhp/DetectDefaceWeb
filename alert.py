@@ -30,7 +30,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 
 class Alert:
-    def sendMessageToEndpoint(self, url, receiver, deface, message, imagePath=None):
+    def sendMessageToEndpoint(self, url, receiver, deface, message, imagePath=None, id_domain=None):
         endpoint = os.environ["API_URL"]
         print("endpoint: " + endpoint)
         base64String = ""
@@ -45,7 +45,8 @@ class Alert:
                 
         headers = {'content-type': 'application/json'}
         #payload = {'domain':url,'type': 4, 'metadata': {'receiver':receiver,'base64String': base64String,'deface': deface}, 'message': message}
-        payload = {'domain':url,'type': 4,'base64String': base64String,'deface': deface,'message': message}
+        #payload = {'domain':url,'type': 4,'base64String': base64String,'deface': deface,'message': message}
+        payload = {"domain":url,"type": 4, "imagePath": imagePath, "deface": deface,"message": message, "id_deaface_map": id_domain}
         r = requests.post(endpoint, data=json.dumps(payload), headers=headers)
         print(r.status_code)
         print(r.reason)

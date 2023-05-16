@@ -3,7 +3,7 @@ import os
 import sys
 
 import requests
-from flask import Flask, request
+from flask import Flask, request, send_file
 
 import bson
 
@@ -62,7 +62,7 @@ def checkdomain():
             message = (
                 f"You website was defaced!\nURL: {url}"
             )
-            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
+            al.sendMessageToEndpoint(url, receiver, defaced_result, message, img_path, id_domain)
             al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
             res = {"code":200,"status": "Website was defaced!", "defaced": "true"}
@@ -70,7 +70,7 @@ def checkdomain():
         else:
             defaced_result = "false"
             message = "Everything oke!"
-            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
+            al.sendMessageToEndpoint(url, receiver, defaced_result, message, img_path, id_domain)
             res = {"code":200,"status": "Everything oke!"}
             print("Everything oke!")
     return res
@@ -94,7 +94,8 @@ def checkdeface():
         return res
     url = data["url"] + body["path"]
     receiver = data["email"]
-
+    id_map = str(data["_id"])
+    
     try:
         response = requests.get(url)
     except requests.ConnectionError:
@@ -111,7 +112,7 @@ def checkdeface():
             subject = "Website Defacement"
             defaced_result = "true"
             message ="You website was defaced!"
-            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path, id_map)
             #al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
             res = {"status": "Website was defaced!"}
@@ -119,11 +120,15 @@ def checkdeface():
         else:
             defaced_result = "false"
             message = "Everything oke!"
-            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path)
+            al.sendMessageToEndpoint(url,receiver, defaced_result, message, img_path, id_map)
             res = {"status": "Everything oke!"}
             print("Everything oke!")
     return res
 
+@app.route('/download')
+def download_file():
+    file_path = request.args.get('path')
+    return send_file(file_path, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="8088")
