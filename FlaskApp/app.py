@@ -105,7 +105,7 @@ def createAgent():
         db.update_existing(unique, key_update)
         subject = "Get active key!"
         message = f"You Agent's active key is: {active_key}"
-        al.sendMessage(receiver, subject, message)
+        # al.sendMessage(receiver, subject, message)
         response = "OKE"
     return response
 

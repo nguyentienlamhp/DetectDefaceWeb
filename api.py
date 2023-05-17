@@ -63,7 +63,7 @@ def checkdomain():
                 f"You website was defaced!\nURL: {url}"
             )
             al.sendMessageToEndpoint(url, receiver, defaced_result, message, img_path, id_domain)
-            al.sendBot(url, img_path)
+            #al.sendBot(url, img_path)
             #al.sendMessage(receiver, subject, message, img_path)
             res = {"code":200,"status": "Website was defaced!", "defaced": "true"}
             print("Website was defaced!")
