@@ -56,7 +56,7 @@ def checkdomain():
         if (endpoint is None):
             endpoint = "https://svc.mitc.vn/data/module4/updateStatusRunning?type=0"
         headers = {'content-type': 'application/json'}
-        r = requests.get(endpoint + "&id="+id_map, headers=headers)
+        r = requests.get(endpoint + "&id="+id_domain, headers=headers)
         print(r.status_code)
         print(r.reason)
         #test
