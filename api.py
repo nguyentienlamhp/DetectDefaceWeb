@@ -51,6 +51,14 @@ def checkdomain():
         res = {"code":500,"status": "URL Invalid! " + url}
     else:
         img_path = screenshot(url)
+        #update status
+        endpoint = os.environ["API_URL_UPDATE_STATUS"]
+        if (endpoint is None):
+            endpoint = "https://svc.mitc.vn/data/module4/updateStatusRunning?type=0"
+        headers = {'content-type': 'application/json'}
+        r = requests.get(endpoint + "&id="+id_map, headers=headers)
+        print(r.status_code)
+        print(r.reason)
         #test
         #al.sendMessageToEndpoint("receiver", "subject", "message", img_path)
         #al.sendMessage("receiver", "subject", "message", img_path)
