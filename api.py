@@ -95,7 +95,6 @@ def checkdeface():
     url = data["url"] + body["path"]
     receiver = data["email"]
     id_map = str(data["_id"])
-    
     try:
         response = requests.get(url)
     except requests.ConnectionError:
@@ -105,6 +104,15 @@ def checkdeface():
     if (response.status_code != 200) and (response.status_code != 302):
         res = {"status": "URL Invalid! " + url}
     else:
+        #update status
+        endpoint = os.environ["API_URL_UPDATE_STATUS"]
+        if (endpoint is None):
+            endpoint = "https://svc.mitc.vn/data/module4/updateStatusRunning?type=0"
+        headers = {'content-type': 'application/json'}
+        r = requests.get(endpoint + "&id="+id_map, headers=headers)
+        print(r.status_code)
+        print(r.reason)
+        
         img_path = screenshot(url)
         defaced = check(img_path)
         if defaced:

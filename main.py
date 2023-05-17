@@ -1,6 +1,8 @@
 from sys import argv
 
 import alert
+import requests
+import os
 import FlaskApp.database
 from checkdefaced import check
 from screenshot import screenshot
@@ -17,6 +19,15 @@ def main(url, receiver):
         print("URL ko co trong csdl")
         return None
     id_map = str(data["_id"])
+    #update status
+    endpoint = os.environ["API_URL_UPDATE_STATUS"]
+    if (endpoint is None):
+        endpoint = "https://svc.mitc.vn/data/module4/updateStatusRunning?type=0"
+    headers = {'content-type': 'application/json'}
+    r = requests.get(endpoint + "&id="+id_map, headers=headers)
+    print(r.status_code)
+    print(r.reason)
+        
     img_path = screenshot(url)
 
     defaced = check(img_path)

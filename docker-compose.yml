@@ -28,6 +28,7 @@ services:
       MONGODB_PASSWORD: admin
       MONGODB_HOSTNAME: mongodb
       API_URL: https://svc.mitc.vn/data/module4/logWatchWebsite?type=0
+      API_URL_UPDATE_STATUS: https://svc.mitc.vn/data/module4/updateStatusRunning?type=0
     ports:
         - "8080:8080"
         - "8088:8088"

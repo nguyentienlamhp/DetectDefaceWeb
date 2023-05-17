@@ -75,6 +75,7 @@ def register():
     for check in db.get_multiple_data():
         if check["url"] == url:
             check = 1
+    _id = None
     if check == 1:
         response = "EXIST"
     else:
