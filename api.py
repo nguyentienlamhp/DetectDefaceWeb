@@ -59,7 +59,7 @@ def checkdefacebyurl():
             print("An exception image path")
 
         #headers = {'content-type': 'application/json'}
-        res = {"url": url, "image_base64": encoded_string, "is_defaced": is_defaced, "message": message}
+        res = {"url": url, "image_base64": encoded_string, "is_defaced": is_defaced, "message": message, "id_map": id_map}
         return res
 
 
