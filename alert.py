@@ -30,6 +30,17 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 
 class Alert:
+    def sendLogToService(self, url, id_map, message, imagePath=None):
+        endpoint = os.environ["API_URL"]
+        encoded_string = ""
+        try:
+            with open(imagePath, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read())
+        except:
+            print("An exception image path")
+        headers = {'content-type': 'application/json'}
+        payload = {"url":url, "imagePath": imagePath,"message": message}
+        
     def sendMessageToEndpoint(self, url, receiver, deface, message, imagePath=None, id_domain=None):
         endpoint = os.environ["API_URL"]
         print("endpoint: " + endpoint)
