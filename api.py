@@ -46,10 +46,10 @@ def checkdefacebyurl():
         img_path = screenshot(url)
         is_defaced = False
         defaced = check(img_path)
-        message = "You website was defaced!"
+        message = "Everything oke!"
         if defaced:
             is_defaced = True
-            message = "Everything oke!"
+            message = "You website was defaced!"
 
         encoded_string = ""
         try:
